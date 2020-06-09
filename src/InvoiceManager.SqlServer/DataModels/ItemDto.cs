@@ -1,5 +1,4 @@
-﻿using InvoiceManager.SqlServer.DataModels.Common;
-using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace InvoiceManager.SqlServer.DataModels
 {
-    public class ItemDto : BaseDto
+    public class ItemDto
     {
         public string Name { get; set; }
 
-        public double Price { get; set; }
+        public double Value { get; set; }
 
         public int InvoiceId { get; set; }
 

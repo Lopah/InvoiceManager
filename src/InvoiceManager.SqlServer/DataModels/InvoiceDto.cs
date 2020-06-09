@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 namespace InvoiceManager.SqlServer.DataModels
 {
     public class InvoiceDto : BaseDto
-    {
+    { 
+        public bool Paid { get; set; }
 
-        public bool Paid { get; set; } = false;
-
-        public ICollection<ItemDto> Items { get; set; }
+        public ICollection<ItemDto> InvoiceItems { get; set; }
     }
 }

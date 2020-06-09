@@ -1,6 +1,7 @@
 ﻿using InvoiceManager.SqlServer.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore.ValueGeneration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace InvoiceManager.SqlServer.Configurations
             builder.Property(e => e.Paid)
                 .IsRequired( );
 
-            builder.HasMany(e => e.Items)
+            builder.HasMany(e => e.InvoiceItems)
                 .WithOne(e => e.Invoice)
                 .HasForeignKey(e => e.InvoiceId);
         }
