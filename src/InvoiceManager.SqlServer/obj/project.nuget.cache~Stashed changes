@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "n7nh6okQ7KzL2QStYzlYpdatcS6QPgrFqcAWvqjPdtule71U+3CsQZhx7KaH8Rl5JmQYtyj46guQKo1Ygim7Nw==",
+  "dgSpecHash": "iQeNK+0+Ss7mFxVxjpcDPWnosBHzmlX7k21Ubn6bj7Mp4i5NWqVQPeta0FDcF14Rce+B5VtgfXu5VShI3P9cgw==",
   "success": true,
   "projectFilePath": "C:\\Repository\\InvoiceManager\\src\\InvoiceManager.SqlServer\\InvoiceManager.SqlServer.csproj",
   "expectedPackageFiles": [

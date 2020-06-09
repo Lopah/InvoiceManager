@@ -1,0 +1,5 @@
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\bin\Debug\netcoreapp3.1\InvoiceManager.SqlServer.deps.json
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\bin\Debug\netcoreapp3.1\InvoiceManager.SqlServer.dll
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.csprojAssemblyReference.cache
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.AssemblyInfoInputs.cache
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.AssemblyInfo.cs
