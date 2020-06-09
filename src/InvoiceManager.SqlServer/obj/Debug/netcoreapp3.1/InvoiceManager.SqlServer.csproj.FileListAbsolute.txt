@@ -3,3 +3,4 @@ C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\bin\Debug\netcoreapp3.
 C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.csprojAssemblyReference.cache
 C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.AssemblyInfoInputs.cache
 C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.AssemblyInfo.cs
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\bin\Debug\netcoreapp3.1\InvoiceManager.Core.dll

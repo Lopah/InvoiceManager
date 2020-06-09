@@ -21,3 +21,4 @@ C:\Repository\InvoiceManager\src\InvoiceManager.API\obj\Debug\netcoreapp3.1\Invo
 C:\Repository\InvoiceManager\src\InvoiceManager.API\obj\Debug\netcoreapp3.1\InvoiceManager.API.AssemblyInfoInputs.cache
 C:\Repository\InvoiceManager\src\InvoiceManager.API\obj\Debug\netcoreapp3.1\InvoiceManager.API.AssemblyInfo.cs
 C:\Repository\InvoiceManager\src\InvoiceManager.API\obj\Debug\netcoreapp3.1\InvoiceManager.API.RazorTargetAssemblyInfo.cache
+C:\Repository\InvoiceManager\src\InvoiceManager.API\bin\Debug\netcoreapp3.1\InvoiceManager.Core.dll
