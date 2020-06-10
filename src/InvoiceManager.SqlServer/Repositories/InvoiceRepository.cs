@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using InvoiceManager.Core.Models;
 using InvoiceManager.Core.Repositories;
 using InvoiceManager.SqlServer.DataModels;
@@ -65,7 +66,12 @@ namespace InvoiceManager.SqlServer.Repositories
 
         public async Task<IEnumerable<InvoiceModel>> GetUnpaidInvoices()
         {
-            return await _mapper.ProjectTo<InvoiceModel>(_context.Invoices).ToListAsync();
+            var invoices = await _context.Invoices
+                .Where(e => e.Paid != true)
+                .Include(e => e.InvoiceItems)
+                .ToListAsync( );
+
+            return _mapper.ProjectTo<InvoiceModel>(invoices.AsQueryable());
         }
 
         public async Task<InvoiceModel> PayInvoiceAsync(InvoiceModel invoice)

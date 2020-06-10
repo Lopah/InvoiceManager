@@ -18,7 +18,7 @@ namespace InvoiceManager.API.Controllers
             _invoiceRepository = invoiceRepository;
         }
 
-        [Route("/unpaid")]
+        [HttpGet("Unpaid")]
         public async Task<IActionResult> GetUnpaid()
         {
             var results = await _invoiceRepository.GetUnpaidInvoices( );
@@ -26,8 +26,7 @@ namespace InvoiceManager.API.Controllers
             return results.Any( ) ? Ok(results) : (IActionResult)NotFound( );
         }
 
-        [HttpPost]
-        [Route("/{id}")]
+        [HttpPost("id/{id:int}")]
         public async Task<IActionResult> PayInvoice(int id)
         {
             var foundEntity = await _invoiceRepository.GetByIdAsync(id);
@@ -35,8 +34,7 @@ namespace InvoiceManager.API.Controllers
             return foundEntity != null ? Ok(_invoiceRepository.PayInvoiceAsync(foundEntity)) : (IActionResult)NotFound( );
         }
 
-        [HttpPatch]
-        [Route("/edit/{id}")]
+        [HttpPatch("edit/{id}")]
         public async Task<IActionResult> EditInvoice(
             int id,
             [FromBody] JsonPatchDocument<InvoiceModel> patchDoc)

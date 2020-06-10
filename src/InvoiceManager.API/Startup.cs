@@ -30,6 +30,8 @@ namespace InvoiceManager.API
 
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IInvoiceRepository, InvoiceRepository>( );
+
+            services.AddControllers( );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
