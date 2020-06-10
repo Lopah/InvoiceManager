@@ -1,57 +1,60 @@
 ﻿using InvoiceManager.SqlServer.DataModels;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InvoiceManager.SqlServer
 {
     public static class AppDbSeed
     {
-        public static async Task SeedSampleDataAsync(AppDbContext context)
+        public static void SeedSampleData(IServiceProvider provider)
         {
-            if (context.Invoices.Any())
+            using (var context = new AppDbContext(provider
+                .GetRequiredService<DbContextOptions<AppDbContext>>( )))
             {
-                return;
-            }
-
-            await context.Invoices.AddRangeAsync(
-                new List<InvoiceDto>
+                if (context.Invoices.Any( ))
                 {
+                    return;
+                }
+
+                context.Invoices.AddRange(
+                    new List<InvoiceDto>
+                    {
                     new InvoiceDto
                     {
                         Id = 0,
-                        Items = new List<ItemDto>
+                        InvoiceItems = new List<ItemDto>
                         {
                             new ItemDto
                             {
                                 Name = "Name1",
-                                Price = 100,
+                                Value = 100,
                             },
 
                             new ItemDto
                             {
                                 Name = "Name1",
-                                Price = 150,
+                                Value = 150,
                             },
 
                             new ItemDto
                             {
                                 Name = "Name1",
-                                Price = 200,
+                                Value = 200,
                             },
 
                             new ItemDto
                             {
                                 Name = "Name1",
-                                Price = 300,
+                                Value = 300,
                             },
 
                             new ItemDto
                             {
                                 Name = "Name1",
-                                Price = 400,
+                                Value = 400,
                             },
                         },
                     },
@@ -59,16 +62,20 @@ namespace InvoiceManager.SqlServer
                         {
                             Id = 1,
                             Paid = true,
-                            Items = new List<ItemDto>
+                            InvoiceItems = new List<ItemDto>
                             {
                                 new ItemDto
                                 {
                                     Name = "SomeItem",
-                                    Price = 1000
+                                    Value = 1000
                                 }
                             }
                         }
-                });
+                    });
+
+                context.SaveChanges( );
+            }
+
         }
     }
 }

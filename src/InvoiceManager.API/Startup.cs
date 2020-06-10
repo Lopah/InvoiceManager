@@ -1,11 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
+using InvoiceManager.API.Extensions;
+using InvoiceManager.Core.Repositories;
 using InvoiceManager.SqlServer;
+using InvoiceManager.SqlServer.Mappings;
+using InvoiceManager.SqlServer.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +27,9 @@ namespace InvoiceManager.API
             {
                 options.UseSqlServer(_configuration.GetConnectionString("db"));
             });
+
+            services.AddAutoMapper(typeof(MappingProfile));
+            services.AddScoped<IInvoiceRepository, InvoiceRepository>( );
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -37,6 +40,8 @@ namespace InvoiceManager.API
             }
 
             app.UseRouting( );
+
+            //app.UseSecretKeyValidation( );
 
             app.UseEndpoints(endpoints =>
             {

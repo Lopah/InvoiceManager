@@ -4,3 +4,12 @@ C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.
 C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.AssemblyInfoInputs.cache
 C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.AssemblyInfo.cs
 C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\bin\Debug\netcoreapp3.1\InvoiceManager.Core.dll
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.csproj.CoreCompileInputs.cache
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\bin\Debug\netcoreapp3.1\InvoiceManager.SqlServer.runtimeconfig.json
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\bin\Debug\netcoreapp3.1\InvoiceManager.SqlServer.runtimeconfig.dev.json
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\bin\Debug\netcoreapp3.1\InvoiceManager.SqlServer.pdb
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\bin\Debug\netcoreapp3.1\InvoiceManager.Core.pdb
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.csproj.CopyComplete
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.dll
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.pdb
+C:\Repository\InvoiceManager\src\InvoiceManager.SqlServer\obj\Debug\netcoreapp3.1\InvoiceManager.SqlServer.genruntimeconfig.cache

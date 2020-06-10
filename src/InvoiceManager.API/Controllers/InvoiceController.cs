@@ -1,9 +1,8 @@
-﻿using InvoiceManager.Core.Repositories;
+﻿using InvoiceManager.Core.Models;
+using InvoiceManager.Core.Repositories;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace InvoiceManager.API.Controllers
@@ -33,7 +32,27 @@ namespace InvoiceManager.API.Controllers
         {
             var foundEntity = await _invoiceRepository.GetByIdAsync(id);
 
-            foundEntity != null ? _invoiceRepository.PayInvoiceAsync(foundEntity) : NotFound( );
+            return foundEntity != null ? Ok(_invoiceRepository.PayInvoiceAsync(foundEntity)) : (IActionResult)NotFound( );
+        }
+
+        [HttpPatch]
+        [Route("/edit/{id}")]
+        public async Task<IActionResult> EditInvoice(
+            int id,
+            [FromBody] JsonPatchDocument<InvoiceModel> patchDoc)
+        {
+            if (patchDoc != null)
+            {
+                var invoice = new InvoiceModel( );
+
+                patchDoc.ApplyTo(invoice);
+
+                return Ok(await _invoiceRepository.UpdateAsync(id,invoice));
+            }
+            else
+            {
+                return NotFound( );
+            }
         }
     }
 }

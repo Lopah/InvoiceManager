@@ -37,7 +37,7 @@ namespace InvoiceManager.SqlServer.Repositories
         {
             var sourceInvoice = _mapper.Map<InvoiceDto>(invoice);
 
-            sourceInvoice.Items.Add(_mapper.Map<ItemDto>(item));
+            sourceInvoice.InvoiceItems.Add(_mapper.Map<ItemDto>(item));
 
             await _context.SaveChangesAsync( );
 
@@ -99,18 +99,28 @@ namespace InvoiceManager.SqlServer.Repositories
             var partialDbInvoice = _context.Invoices.Find(sourceInvoice);
 
             var completeDbInvoice = await _context.Invoices.Where(e => e.Id == partialDbInvoice.Id)
-                .Include(x => x.Items).FirstOrDefaultAsync();
+                .Include(x => x.InvoiceItems).FirstOrDefaultAsync();
 
-            completeDbInvoice.Items.Remove(_mapper.Map<ItemDto>(item));
+            completeDbInvoice.InvoiceItems.Remove(_mapper.Map<ItemDto>(item));
 
             await _context.SaveChangesAsync( );
 
             return _mapper.Map<InvoiceModel>(_context.Invoices.Find(completeDbInvoice));
         }
 
-        public async Task<InvoiceModel> UpdateAsync(InvoiceModel entity, InvoiceModel updatedEntity)
+        public async Task<InvoiceModel> UpdateAsync(int id, InvoiceModel updatedEntity)
         {
-            throw new NotImplementedException( );
+            var sourceEntity = await _context.Invoices.Where(x => x.Id == id)
+                .Include(e => e.InvoiceItems)
+                .FirstOrDefaultAsync();
+
+            sourceEntity = _mapper.Map<InvoiceDto>(updatedEntity);
+
+            await _context.SaveChangesAsync( );
+
+
+            return _mapper.Map<InvoiceModel>(_context.Invoices.Where(x => x.Id == id)
+                .Include(e => e.InvoiceItems).First( ));
         }
     }
 }

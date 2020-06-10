@@ -16,7 +16,7 @@ namespace InvoiceManager.Core.Repositories
 
         Task<T> AddAsync(T entity);
 
-        Task<T> UpdateAsync(T entity);
+        Task<T> UpdateAsync(int id, T updatedEntity);
 
         Task<T> RemoveAsync(T entity);
     }
