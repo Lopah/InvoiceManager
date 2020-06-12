@@ -25,25 +25,32 @@ namespace InvoiceManager.API.Controllers
 
             return results.Any( ) ? Ok(results) : (IActionResult)NotFound( );
         }
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var result = await _invoiceRepository.GetByIdAsync(id);
 
-        [HttpPost("id/{id:int}")]
+            return result != null ? Ok(result) : (IActionResult)NotFound( );
+        }
+
+        [HttpPost("{id}")]
         public async Task<IActionResult> PayInvoice(int id)
         {
-            var foundEntity = await _invoiceRepository.GetByIdAsync(id);
+            var foundEntity = await _invoiceRepository.GetUnpaidInvoiceByIdAsync(id);
 
-            return foundEntity != null ? Ok(_invoiceRepository.PayInvoiceAsync(foundEntity)) : (IActionResult)NotFound( );
+            return foundEntity != null ? Ok(await _invoiceRepository.PayInvoiceAsync(foundEntity)) : (IActionResult)NotFound( );
         }
 
         [HttpPatch("edit/{id}")]
         public async Task<IActionResult> EditInvoice(
             int id,
-            [FromBody] JsonPatchDocument<InvoiceModel> patchDoc)
+            [FromBody] JsonPatchDocument<InvoiceModel> patchDocument)
         {
-            if (patchDoc != null)
+            if (patchDocument != null)
             {
-                var invoice = new InvoiceModel( );
+                var invoice = await _invoiceRepository.GetByIdAsync(id);
 
-                patchDoc.ApplyTo(invoice);
+                patchDocument.ApplyTo(invoice);
 
                 return Ok(await _invoiceRepository.UpdateAsync(id,invoice));
             }

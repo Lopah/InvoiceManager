@@ -58,5 +58,7 @@ C:\Repository\InvoiceManager\src\InvoiceManager.API\obj\Debug\netcoreapp3.1\Invo
 C:\Repository\InvoiceManager\src\InvoiceManager.API\obj\Debug\netcoreapp3.1\InvoiceManager.API.pdb
 C:\Repository\InvoiceManager\src\InvoiceManager.API\obj\Debug\netcoreapp3.1\InvoiceManager.API.genruntimeconfig.cache
 C:\Repository\InvoiceManager\src\InvoiceManager.API\bin\Debug\netcoreapp3.1\Microsoft.EntityFrameworkCore.Design.dll
+C:\Repository\InvoiceManager\src\InvoiceManager.API\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Repository\InvoiceManager\src\InvoiceManager.API\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Repository\InvoiceManager\src\InvoiceManager.API\obj\Debug\netcoreapp3.1\InvoiceManager.API.csproj.CoreCompileInputs.cache
 C:\Repository\InvoiceManager\src\InvoiceManager.API\obj\Debug\netcoreapp3.1\InvoiceManager.API.MvcApplicationPartsAssemblyInfo.cache

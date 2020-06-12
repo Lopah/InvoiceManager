@@ -16,5 +16,7 @@ namespace InvoiceManager.Core.Repositories
         Task<IEnumerable<InvoiceModel>> GetUnpaidInvoices();
 
         Task<InvoiceModel> PayInvoiceAsync(InvoiceModel invoice);
+
+        Task<InvoiceModel> GetUnpaidInvoiceByIdAsync(int id);
     }
 }

@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
 namespace InvoiceManager.SqlServer.Repositories
@@ -53,15 +54,31 @@ namespace InvoiceManager.SqlServer.Repositories
 
         public async Task<InvoiceModel> GetByIdAsync(int id)
         {
-            var mappedInvoice = await _context.Invoices.Where(e => e.Id == id).FirstOrDefaultAsync( );
+            var mappedInvoice = await _context.Invoices
+                .Where(e => e.Id == id)
+                .Include(e => e.InvoiceItems)
+                .FirstOrDefaultAsync( );
             return _mapper.Map<InvoiceModel>(mappedInvoice);
         }
 
-        public Task<InvoiceModel> GetEntity(InvoiceModel entity)
+        public async Task<InvoiceModel> GetEntity(InvoiceModel entity)
         {
-            var sourceInvoice = _mapper.Map<InvoiceDto>(entity);
+            var sourceInvoice = await _context.Invoices
+                .Where(e => e.Id == entity.Id)
+                .Include(e => e.InvoiceItems)
+                .FirstOrDefaultAsync( );
 
-            return Task.FromResult(_mapper.Map<InvoiceModel>(_context.Invoices.Find(sourceInvoice)));
+            return _mapper.Map<InvoiceModel>(sourceInvoice);
+        }
+
+        public async Task<InvoiceModel> GetUnpaidInvoiceByIdAsync(int id)
+        {
+            var sourceInvoice = await _context.Invoices
+                .Where(e => e.Id == id && e.Paid != true)
+                .Include(e => e.InvoiceItems)
+                .FirstOrDefaultAsync( );
+
+            return _mapper.Map<InvoiceModel>(sourceInvoice);
         }
 
         public async Task<IEnumerable<InvoiceModel>> GetUnpaidInvoices()
@@ -76,15 +93,16 @@ namespace InvoiceManager.SqlServer.Repositories
 
         public async Task<InvoiceModel> PayInvoiceAsync(InvoiceModel invoice)
         {
-            var sourceInvoice = _mapper.Map<InvoiceDto>(invoice);
+            var sourceInvoice = await _context.Invoices
+                .Where(e => e.Id == invoice.Id)
+                .Include(e => e.InvoiceItems)
+                .FirstOrDefaultAsync( );
 
             sourceInvoice.Paid = true;
 
             await _context.SaveChangesAsync( );
 
-            return _mapper.Map<InvoiceModel>(_context.Invoices
-                .Where(e => e.Id == sourceInvoice.Id)
-                .FirstOrDefault( ));
+            return _mapper.Map<InvoiceModel>(await this.GetEntity(invoice));
         }
 
         public async Task<InvoiceModel> RemoveAsync(InvoiceModel entity)
