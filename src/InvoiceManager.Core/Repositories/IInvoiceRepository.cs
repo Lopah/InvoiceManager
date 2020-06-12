@@ -11,10 +11,12 @@ namespace InvoiceManager.Core.Repositories
     {
         Task<InvoiceModel> AddInvoiceItemAsync(InvoiceModel invoice, ItemModel item);
 
-        Task<InvoiceModel> RemoveInvoiceItemAsync(InvoiceModel invoice, ItemModel item);
+        Task<InvoiceModel> RemoveInvoiceItemAsync(ItemModel item);
 
         Task<IEnumerable<InvoiceModel>> GetUnpaidInvoices();
 
         Task<InvoiceModel> PayInvoiceAsync(InvoiceModel invoice);
+
+        Task<InvoiceModel> GetUnpaidInvoiceByIdAsync(int id);
     }
 }

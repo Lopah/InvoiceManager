@@ -17,10 +17,6 @@ namespace InvoiceManager.SqlServer.Configurations
                 .IsRequired( )
                 .HasMaxLength(200);
 
-            //builder.HasOne(e => e.Invoice)
-            //    .WithMany(e => e.InvoiceItems)
-            //    .HasForeignKey(e => e.InvoiceId);
-
         }
     }
 }

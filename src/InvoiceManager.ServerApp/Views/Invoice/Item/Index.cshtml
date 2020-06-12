@@ -1,0 +1,42 @@
+﻿@model IEnumerable<InvoiceItemViewModel>
+
+@{
+    ViewBag.Title = "Viewing items for invoice ";
+
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Price)
+            </td>
+            <td>
+                @Html.ActionLink("Remove", "Delete", new { id = item.Id})
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>
+            <a asp-action="Create" asp-controller="Item" asp-route-id="@ViewBag.ParentId">Create</a>
+        </td>
+    </tr>
+</table>

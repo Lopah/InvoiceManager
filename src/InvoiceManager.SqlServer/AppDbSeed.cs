@@ -24,7 +24,6 @@ namespace InvoiceManager.SqlServer
                     {
                     new InvoiceDto
                     {
-                        Id = 0,
                         InvoiceItems = new List<ItemDto>
                         {
                             new ItemDto
@@ -60,7 +59,6 @@ namespace InvoiceManager.SqlServer
                     },
                     new InvoiceDto
                         {
-                            Id = 1,
                             Paid = true,
                             InvoiceItems = new List<ItemDto>
                             {

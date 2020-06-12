@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using InvoiceManager.Core.Models;
 using InvoiceManager.Core.Repositories;
 using InvoiceManager.SqlServer.DataModels;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Threading.Tasks;
 
 namespace InvoiceManager.SqlServer.Repositories
@@ -30,7 +32,7 @@ namespace InvoiceManager.SqlServer.Repositories
             // save immediately
             await _context.SaveChangesAsync( );
             // find in the db and return it.
-            return _mapper.Map<InvoiceModel>(_context.Invoices.Find(sourceInvoice));
+            return _mapper.Map<InvoiceModel>(_context.Invoices.Where(e => e.Id == sourceInvoice.Id).FirstOrDefault());
         }
 
         public async Task<InvoiceModel> AddInvoiceItemAsync(InvoiceModel invoice, ItemModel item)
@@ -45,45 +47,74 @@ namespace InvoiceManager.SqlServer.Repositories
 
         }
 
-        public Task<IEnumerable<InvoiceModel>> GetAllAsync()
+        public async Task<IEnumerable<InvoiceModel>> GetAllAsync()
         {
-            throw new NotImplementedException( );
+            var invoices = await _context.Invoices
+                .Include(e => e.InvoiceItems)
+                .ProjectTo<InvoiceModel>(_mapper.ConfigurationProvider)
+                .ToListAsync( );
+
+            return invoices;
         }
 
         public async Task<InvoiceModel> GetByIdAsync(int id)
         {
-            var mappedInvoice = await _context.Invoices.Where(e => e.Id == id).FirstOrDefaultAsync( );
+            var mappedInvoice = await _context.Invoices
+                .Where(e => e.Id == id)
+                .Include(e => e.InvoiceItems)
+                .FirstOrDefaultAsync( );
             return _mapper.Map<InvoiceModel>(mappedInvoice);
         }
 
-        public Task<InvoiceModel> GetEntity(InvoiceModel entity)
+        public async Task<InvoiceModel> GetEntity(InvoiceModel entity)
         {
-            var sourceInvoice = _mapper.Map<InvoiceDto>(entity);
+            var sourceInvoice = await _context.Invoices
+                .Where(e => e.Id == entity.Id)
+                .Include(e => e.InvoiceItems)
+                .FirstOrDefaultAsync( );
 
-            return Task.FromResult(_mapper.Map<InvoiceModel>(_context.Invoices.Find(sourceInvoice)));
+            return _mapper.Map<InvoiceModel>(sourceInvoice);
+        }
+
+        public async Task<InvoiceModel> GetUnpaidInvoiceByIdAsync(int id)
+        {
+            var sourceInvoice = await _context.Invoices
+                .Where(e => e.Id == id && e.Paid != true)
+                .Include(e => e.InvoiceItems)
+                .FirstOrDefaultAsync( );
+
+            return _mapper.Map<InvoiceModel>(sourceInvoice);
         }
 
         public async Task<IEnumerable<InvoiceModel>> GetUnpaidInvoices()
         {
-            return await _mapper.ProjectTo<InvoiceModel>(_context.Invoices).ToListAsync();
+            var invoices = await _context.Invoices
+                .Where(e => e.Paid != true)
+                .Include(e => e.InvoiceItems)
+                .ToListAsync( );
+
+            return _mapper.ProjectTo<InvoiceModel>(invoices.AsQueryable());
         }
 
         public async Task<InvoiceModel> PayInvoiceAsync(InvoiceModel invoice)
         {
-            var sourceInvoice = _mapper.Map<InvoiceDto>(invoice);
+            var sourceInvoice = await _context.Invoices
+                .Where(e => e.Id == invoice.Id)
+                .Include(e => e.InvoiceItems)
+                .FirstOrDefaultAsync( );
 
             sourceInvoice.Paid = true;
 
             await _context.SaveChangesAsync( );
 
-            return _mapper.Map<InvoiceModel>(_context.Invoices
-                .Where(e => e.Id == sourceInvoice.Id)
-                .FirstOrDefault( ));
+            return _mapper.Map<InvoiceModel>(await this.GetEntity(invoice));
         }
 
         public async Task<InvoiceModel> RemoveAsync(InvoiceModel entity)
         {
-            var sourceInvoice = _mapper.Map<InvoiceDto>(entity);
+            var sourceInvoice = await _context.Invoices
+                .Where(e => e.Id == entity.Id)
+                .FirstOrDefaultAsync( );
 
             _context.Invoices.Remove(sourceInvoice);
 
@@ -92,35 +123,36 @@ namespace InvoiceManager.SqlServer.Repositories
             return entity;
         }
 
-        public async Task<InvoiceModel> RemoveInvoiceItemAsync(InvoiceModel invoice, ItemModel item)
+        public async Task<InvoiceModel> RemoveInvoiceItemAsync(ItemModel item)
         {
-            var sourceInvoice = _mapper.Map<InvoiceDto>(invoice);
+            var entity = await _context.Items.Where(e => e.Id == item.Id).FirstOrDefaultAsync( );
+            if (entity != null)
+            {
+                _context.Items.Remove(entity);
 
-            var partialDbInvoice = _context.Invoices.Find(sourceInvoice);
+                await _context.SaveChangesAsync( );
 
-            var completeDbInvoice = await _context.Invoices.Where(e => e.Id == partialDbInvoice.Id)
-                .Include(x => x.InvoiceItems).FirstOrDefaultAsync();
+                return _mapper.Map<InvoiceModel>(await this.GetByIdAsync(entity.InvoiceId));
+            }
 
-            completeDbInvoice.InvoiceItems.Remove(_mapper.Map<ItemDto>(item));
-
-            await _context.SaveChangesAsync( );
-
-            return _mapper.Map<InvoiceModel>(_context.Invoices.Find(completeDbInvoice));
+            return null;
         }
 
         public async Task<InvoiceModel> UpdateAsync(int id, InvoiceModel updatedEntity)
         {
-            var sourceEntity = await _context.Invoices.Where(x => x.Id == id)
+            var sourceEntity = await _context.Invoices
+                .Where(x => x.Id == id)
                 .Include(e => e.InvoiceItems)
                 .FirstOrDefaultAsync();
 
-            sourceEntity = _mapper.Map<InvoiceDto>(updatedEntity);
+
+            sourceEntity.InvoiceItems = _mapper.ProjectTo<ItemDto>(updatedEntity.Items.AsQueryable( )).ToList();
+            sourceEntity.Paid = updatedEntity.Paid;
 
             await _context.SaveChangesAsync( );
 
 
-            return _mapper.Map<InvoiceModel>(_context.Invoices.Where(x => x.Id == id)
-                .Include(e => e.InvoiceItems).First( ));
+            return _mapper.Map<InvoiceModel>(sourceEntity);
         }
     }
 }

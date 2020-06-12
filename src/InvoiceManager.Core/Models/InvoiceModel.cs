@@ -4,6 +4,7 @@ namespace InvoiceManager.Core.Models
 {
     public class InvoiceModel
     {
+        public int Id { get; set; }
         public bool Paid { get; set; }
 
         public ICollection<ItemModel> Items { get; set; }

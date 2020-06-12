@@ -1,0 +1,26 @@
+﻿@model InvoiceViewModel
+
+@{
+    ViewBag.Title = "Editing an Invoice";
+}
+
+<form asp-action="Update" asp-route-id="@ViewBag.ParentId" method="post">
+    <div class="form">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Paid"></label>
+            <div>
+                <input asp-for="Paid" />
+                <span asp-validation-for="Paid"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-6">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back</a>
+            </div>
+        </div>
+    </div>
+</form>

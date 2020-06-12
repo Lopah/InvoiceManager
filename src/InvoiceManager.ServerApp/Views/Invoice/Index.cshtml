@@ -1,0 +1,43 @@
+﻿@model IEnumerable<InvoiceViewModel>
+
+@{
+    ViewBag.Title = "All invoices";
+}
+
+<table class="table">
+    <tr>
+        <th>
+            InvoiceStatus
+        </th>
+        <th>
+            Items Details
+        </th>
+        <th>
+            Number of Items
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayTextFor(model => item.Paid)
+            </td>
+            <td>
+                @Html.ActionLink("Items", "Index", "Item", new { id = item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Items.Count)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id})
+            </td>
+            <td>
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+    <tr>
+        <td>@Html.ActionLink("Add new", "Create")</td>
+    </tr>
+</table>

@@ -13,11 +13,19 @@ namespace InvoiceManager.SqlServer.Mappings
     {
         public MappingProfile()
         {
-            CreateMap<ItemDto, ItemModel>( )
-                .ReverseMap( );
+            CreateMap<ItemDto, ItemModel>()
+                .ForMember(m => m.Price,
+                opts => opts.MapFrom(source => source.Value))
+                .ReverseMap( )
+                .ForMember(m => m.Value,
+                opts => opts.MapFrom(source => source.Price));
 
             CreateMap<InvoiceDto, InvoiceModel>( )
-                .ReverseMap( );
+                .ForMember(m => m.Items,
+                opts => opts.MapFrom(source => source.InvoiceItems))
+                .ReverseMap( )
+                .ForMember(m => m.InvoiceItems,
+                opts => opts.MapFrom(source => source.Items));
         }
     }
 }

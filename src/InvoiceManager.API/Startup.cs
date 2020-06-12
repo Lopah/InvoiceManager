@@ -30,6 +30,10 @@ namespace InvoiceManager.API
 
             services.AddAutoMapper(typeof(MappingProfile));
             services.AddScoped<IInvoiceRepository, InvoiceRepository>( );
+
+            services
+                .AddControllers( )
+                .AddNewtonsoftJson();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,7 +45,7 @@ namespace InvoiceManager.API
 
             app.UseRouting( );
 
-            //app.UseSecretKeyValidation( );
+            app.UseSecretKeyValidation( );
 
             app.UseEndpoints(endpoints =>
             {

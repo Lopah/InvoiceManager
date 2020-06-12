@@ -24,6 +24,7 @@ namespace InvoiceManager.API.Middleware
             {
                 if (_configuration.GetSection("secretKey").Value != key)
                 {
+                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                     throw new InvalidSecretKeyException(key);
                 }
             }
