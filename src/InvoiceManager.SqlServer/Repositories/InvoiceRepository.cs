@@ -145,9 +145,8 @@ namespace InvoiceManager.SqlServer.Repositories
                 .Include(e => e.InvoiceItems)
                 .FirstOrDefaultAsync();
 
-            //another work around to see if context works
-            //if this stays here then I haven't found a better solution
-            //even though InvoiceItemRepository.UpdateAsync works normally.
+
+            sourceEntity.InvoiceItems = _mapper.ProjectTo<ItemDto>(updatedEntity.Items.AsQueryable( )).ToList();
             sourceEntity.Paid = updatedEntity.Paid;
 
             await _context.SaveChangesAsync( );

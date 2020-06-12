@@ -91,7 +91,9 @@ namespace InvoiceManager.SqlServer.Repositories
 
             if (foundEntity != null)
             {
-                foundEntity = _mapper.Map<ItemDto>(updatedEntity);
+                foundEntity.InvoiceId = updatedEntity.InvoiceId;
+                foundEntity.Name = updatedEntity.Name;
+                foundEntity.Value = updatedEntity.Price;
 
                 await _context.SaveChangesAsync( );
 
