@@ -1,0 +1,188 @@
+{
+	"info": {
+		"_postman_id": "9c2521f2-7ad2-4d01-803a-689fdf270557",
+		"name": "InvoiceManager.API.Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Unpaid Invoices",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Invoice/Unpaid",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Invoice",
+						"Unpaid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Unpaid Invoices With Wrong Key",
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "WrongKeyInput",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "key",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Invoice/Unpaid",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Invoice",
+						"Unpaid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Unpaid Invoices With No Key",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Invoice/Unpaid",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Invoice",
+						"Unpaid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pay Invoice with Id 7",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/Invoice/7",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Invoice",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Invoice via JSON",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n\t{\n\t\t\"op\": \"replace\",\n\t\t\"path\": \"/paid\",\n\t\t\"value\": false\n\t}\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/Invoice/edit/7",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"Invoice",
+						"edit",
+						"7"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "{{keyValue}}",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "key",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "217538b6-22a2-420d-8379-27423462a681",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5faaea58-0fd3-4a53-997f-81ebb1d50a63",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "aff62931-a42d-4f9f-a665-e5cd3b7ac21c",
+			"key": "keyValue",
+			"value": "12345",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
